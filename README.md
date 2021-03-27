@@ -11,4 +11,4 @@ a big thanks to [Chain Layer](https://terra.quicksync.io/) for hosting the snaps
 
 If you think this was useful, feel free to delegate to the [pete's fan club](https://terra.stake.id/#/validator/7463FFB4B492477E947B639620F1868E84A6FB84) validator. It will help defray the costs.
 
-Pete's Fan Club - Dedicated to the people who introduced us to Terra/Luna. For me that was Pete. #WhoWasYourPete ?
+[Pete's Fan Club](https://twitter.com/ClubPetes) - Dedicated to the people who introduced us to Terra/Luna. For me that was Pete. #WhoWasYourPete ?
