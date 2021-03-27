@@ -23,7 +23,7 @@ sudo cp validator/*.service /etc/systemd/system/
 
 # additional stuff required on the box
 sudo apt-get update && sudo apt-get upgrade -y
-sudo apt-get install -y build-essential git jq liblz4-tool aria2
+sudo apt-get install -y build-essential git jq liblz4-tool aria2 net-tools vim
 
 # GO .. as we're building it from source.
 # TBD do a checksum check
