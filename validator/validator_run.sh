@@ -21,9 +21,13 @@ sudo cp validator/limits.terrad /etc/security/limits.d/limits.terrad
 # install the service definitions
 sudo cp validator/*.service /etc/systemd/system/
 
+# Google's monitoring agent 
+curl -sSO https://dl.google.com/cloudagents/add-monitoring-agent-repo.sh 
+sudo bash add-monitoring-agent-repo.sh 
+
 # additional stuff required on the box
 sudo apt-get update && sudo apt-get upgrade -y
-sudo apt-get install -y build-essential git jq liblz4-tool aria2 net-tools vim
+sudo apt-get install -y build-essential git jq liblz4-tool aria2 net-tools vim 'stackdriver-agent=6.*'
 
 # GO .. as we're building it from source.
 # TBD do a checksum check

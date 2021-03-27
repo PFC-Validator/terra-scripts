@@ -14,15 +14,17 @@ gcloud compute instances create validator-01 \
     --tags=validator \
     --boot-disk-size=200G &
 
+# TODO determine if this really needs an external IP
 gcloud compute instances create feeder-01 \
-    --image  ${machine_image} \
+    --image ${machine_image} \
     --image-project cos-cloud \
     --zone ${DEFAULT_ZONE} \
     --tags=feeder \
     --machine-type ${MACHINE_TYPE} &
 
+# TODO determine if this really needs an external IP
 gcloud compute instances create oracle-01 \
-    --image  ${machine_image} \
+    --image ${machine_image} \
     --image-project cos-cloud \
     --zone ${DEFAULT_ZONE} \
     --tags=oracle \
@@ -31,6 +33,7 @@ gcloud compute instances create oracle-01 \
 gcloud compute disks create validator-01-disk \
   --size ${VALIDATOR_DISK_SIZE} \
   --type ${VALIDATOR_DISK_TYPE} &
+  
 wait
 
 gcloud compute instances attach-disk validator-01 \

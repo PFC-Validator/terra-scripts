@@ -18,6 +18,5 @@ gcloud compute firewall-rules create "feeder-rule-rest" \
    --source-tags oracle \
    --target-tags feeder & 
 wait 
-#gcloud compute firewall-rules create --network=default  allow-node-ipc --allow=tcp:1317
 
-#ssh user@validator-01 --ssh-key-file=${SSH_KEY_FILE}
+gcloud compute networks subnets update default --region=${DEFAULT_REGION} --enable-private-ip-google-access
