@@ -24,11 +24,16 @@ sudo cp validator/*.service /etc/systemd/system/
 # Google's monitoring agent 
 curl -sSO https://dl.google.com/cloudagents/add-monitoring-agent-repo.sh 
 sudo bash add-monitoring-agent-repo.sh 
+curl -sSO https://dl.google.com/cloudagents/add-logging-agent-repo.sh
+sudo bash add-logging-agent-repo.sh 
 
 # additional stuff required on the box
 sudo apt-get update && sudo apt-get upgrade -y
 sudo apt-get install -y build-essential git jq liblz4-tool aria2 net-tools vim 'stackdriver-agent=6.*'
-
+# logging stuff
+sudo apt-get install -y google-fluentd 
+sudo apt-get install -y google-fluentd-catch-all-config 
+sudo service google-fluentd start
 # GO .. as we're building it from source.
 # TBD do a checksum check
 curl -LO https://golang.org/dl/go1.16.2.linux-amd64.tar.gz
