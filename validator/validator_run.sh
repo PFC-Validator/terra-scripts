@@ -51,6 +51,7 @@ rm -f .terrad/config/genesis.json
 # curl https://columbus-genesis.s3-ap-northeast-1.amazonaws.com/genesis.json > $HOME/.terrad/config/genesis.json
 curl https://raw.githubusercontent.com/terra-project/testnet/master/tequila-0004/genesis.json > $HOME/.terrad/config/genesis.json
 curl https://raw.githubusercontent.com/terra-project/testnet/master/tequila-0004/address.json > $HOME/.terrad/config/address.json
+curl https://network.terra.dev/testnet/addrbook.json > $HOME/.terrad/addrbook.json
 
 cp .terrad/config/config.toml .terrad/config/config.toml.orig
 # sed script to fix indexer line to 'null'
