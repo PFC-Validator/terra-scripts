@@ -59,10 +59,15 @@ curl https://raw.githubusercontent.com/terra-project/testnet/master/tequila-0004
 # curl https://network.terra.dev/addrbook.json > $HOME/.terrad/addrbook.json
 curl https://network.terra.dev/testnet/addrbook.json > $HOME/.terrad/addrbook.json
 
+pushd ${HOME}
 cp .terrad/config/config.toml .terrad/config/config.toml.orig
 # sed script to fix indexer line to 'null'
 sed 's/indexer = \"kv\"/indexer = \"null\"/' < .terrad/config/config.toml.orig > .terrad/config/config.toml.1 
-sed 's/db_dir = \"data\"/db_dir = \"\/mnt\/disks\/data\/terrad\/data\"/' < .terrad/config/config.toml.1 > .terrad/config/config.toml
+sed 's/\"data/\"\/mnt\/disks\/data\/terrad\/data/' < .terrad/config/config.toml.1 > .terrad/config/config.toml
+#sed 's/db_dir = \"data\"/db_dir = \"\/mnt\/disks\/data\/terrad\/data\"/' < .terrad/config/config.toml.1 > .terrad/config/config.toml.2
+#sed 's/priv_validator_state_file = \"data/priv_validator_state_file = \"\/mnt\/disks\/data\/terrad\/data/' < .terrad/config/config.toml.2 > .terrad/config/config.toml.3
+#sed 's/wal_file = \"data/wal_file = \"\/mnt\/disks\/data\/terrad\/data/' < .terrad/config/config.toml.2 > .terrad/config/config.toml.3
+popd
 terracli config node http://127.0.0.1:26657
 terracli config chain-id ${CHAIN_ID}
 

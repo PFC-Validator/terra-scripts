@@ -6,5 +6,7 @@ MACHINE_TYPE=f1-micro
 SSH_KEY_FILE=setup_key_private
 MONIKER=my_test_validator
 CHAIN_ID=tequila-0004
-VALIDATOR_DISK_TYPE=pd-standard
 VALIDATOR_DISK_SIZE=300G
+# you can try the freebie level.. sadly you need a bigger box to even run the testnet. 
+VALIDATOR_MACHINE_TYPE=e2-highmem-2
+VALIDATOR_DISK_TYPE=pd-balanced

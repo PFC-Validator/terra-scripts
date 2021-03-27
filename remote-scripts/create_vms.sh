@@ -10,7 +10,7 @@ machine_image=$(gcloud compute images list --project cos-cloud --no-standard-ima
 gcloud compute instances create validator-01 \
  --image=ubuntu-minimal-2004-focal-v20210325 --image-project=ubuntu-os-cloud \
     --zone ${DEFAULT_ZONE} \
-    --machine-type ${MACHINE_TYPE} \
+    --machine-type ${VALIDATOR_MACHINE_TYPE} \
     --tags=validator \
     --boot-disk-size=200G &
 
