@@ -2,4 +2,8 @@
 PROJECT_ID=petes-fan-club
 DEFAULT_ZONE=asia-south1-c
 MACHINE_TYPE=f1-micro
-SSH_KEY_FILE=setup_key
+SSH_KEY_FILE=setup_key_private
+MONIKER=my_test_validator
+CHAIN_ID=tequila-0004
+VALIDATOR_DISK_TYPE=pd-standard
+VALIDATOR_DISK_SIZE=300G

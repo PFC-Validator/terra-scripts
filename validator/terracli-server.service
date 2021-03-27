@@ -1,0 +1,16 @@
+[Unit]
+Description=Terra CLI LCD Service
+After=network.target
+
+[Service]
+Type=simple
+User=terrad
+ExecStart=/home/user/go/bin/terracli rest-server --chain-id=tequila-0004   --laddr=tcp://localhost:1317    --node tcp://localhost:26657   --trust-node=true
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+LimitNOFILE=65535
+
