@@ -1,0 +1,5 @@
+# the GCP project id
+PROJECT_ID=petes-fan-club
+DEFAULT_ZONE=asia-south1-c
+MACHINE_TYPE=f1-micro
+SSH_KEY_FILE=setup_key
