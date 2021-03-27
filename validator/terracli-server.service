@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 User=user
-ExecStart=/home/user/go/bin/terracli rest-server --chain-id=tequila-0004   --laddr=tcp://localhost:1317    --node tcp://localhost:26657   --trust-node=true
+ExecStart=/home/user/go/bin/terracli rest-server --chain-id=tequila-0004   --laddr=tcp://0.0.0.0:1317    --node tcp://localhost:26657   --trust-node=true
 Restart=on-abort
 
 [Install]
