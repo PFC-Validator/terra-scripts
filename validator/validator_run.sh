@@ -56,17 +56,28 @@ rm -f .terrad/config/genesis.json
 # curl https://columbus-genesis.s3-ap-northeast-1.amazonaws.com/genesis.json > $HOME/.terrad/config/genesis.json
 curl https://raw.githubusercontent.com/terra-project/testnet/master/tequila-0004/genesis.json > $HOME/.terrad/config/genesis.json
 curl https://raw.githubusercontent.com/terra-project/testnet/master/tequila-0004/address.json > $HOME/.terrad/config/address.json
-# curl https://network.terra.dev/addrbook.json > $HOME/.terrad/addrbook.json
-curl https://network.terra.dev/testnet/addrbook.json > $HOME/.terrad/addrbook.json
+# curl https://network.terra.dev/addrbook.json > $HOME/.terrad/config/addrbook.json
+curl https://network.terra.dev/testnet/addrbook.json > $HOME/.terrad/config/addrbook.json
 
 pushd ${HOME}
 cp .terrad/config/config.toml .terrad/config/config.toml.orig
 # sed script to fix indexer line to 'null'
-sed 's/indexer = \"kv\"/indexer = \"null\"/' < .terrad/config/config.toml.orig > .terrad/config/config.toml.1 
-sed 's/\"data/\"\/mnt\/disks\/data\/terrad\/data/' < .terrad/config/config.toml.1 > .terrad/config/config.toml
+# sed 's/indexer = \"kv\"/indexer = \"null\"/' < .terrad/config/config.toml.orig > .terrad/config/config.toml.1 
+sed 's/\"data/\"\/mnt\/disks\/data\/terrad\/data/' < .terrad/config/config.toml.orig > .terrad/config/config.toml.1
+sed 's/seeds = \"\"/seeds = \"341f51bf381566dfef0fc345c2aa882cbeebd320@public-seed2.terra.dev:36656\"/' < .terrad/config/config.toml.1 > .terrad/config/config.toml
+
+# Columbia
+# seeds = "20271e0591a7204d72280b87fdaa854f50c55e7e@106.10.59.48:26656,3b1c85b86528d10acc5475cb2c874714a69fde1e@110.234.23.153:26656,49333a4cb195d570ea244dab675a38abf97011d2@13.113.103.57:26656,7f19128de85ced9b62c3947fd2c2db2064462533@52.68.3.126:26656"
+
 #sed 's/db_dir = \"data\"/db_dir = \"\/mnt\/disks\/data\/terrad\/data\"/' < .terrad/config/config.toml.1 > .terrad/config/config.toml.2
 #sed 's/priv_validator_state_file = \"data/priv_validator_state_file = \"\/mnt\/disks\/data\/terrad\/data/' < .terrad/config/config.toml.2 > .terrad/config/config.toml.3
 #sed 's/wal_file = \"data/wal_file = \"\/mnt\/disks\/data\/terrad\/data/' < .terrad/config/config.toml.2 > .terrad/config/config.toml.3
+
+# app.toml
+# minimum-gas-prices = "0.01133uluna,0.15uusd,0.104938usdr,169.77ukrw,428.571umnt,0.125ueur,0.98ucny,16.37ujpy,0.11ugbp,10.88uinr,0.19ucad,0.14uchf,0.19uaud,0.2usgd,4.62uthb"
+cp .terrad/config/app.toml .terrad/config/app.toml.orig
+sed 's/minimum-gas-prices = \"\"/minimum-gas-prices = \"0.01133uluna,0.15uusd,0.104938usdr,169.77ukrw,428.571umnt,0.125ueur,0.98ucny,16.37ujpy,0.11ugbp,10.88uinr,0.19ucad,0.14uchf,0.19uaud,0.2usgd,4.62uthb\"/' < ${HOME}/.terrad/config/app.toml.orig > ${HOME}/.terrad/config/app.toml
+
 popd
 terracli config node http://127.0.0.1:26657
 terracli config chain-id ${CHAIN_ID}
@@ -75,8 +86,9 @@ terracli config chain-id ${CHAIN_ID}
 #syncfile=$( curl https://terra.quicksync.io/sync.json|jq -r ".[]| select(.network==\"pruned\")|.file" |grep columbus-4)
 syncfile=tequila-4.20210215.tar.lz4
 cd /mnt/disks/data/terrad 
-aria2c --continue -x5 https://get.quicksync.io/${syncfile} -o sync.lz4 
-lz4 -d sync.lz4 |tar xf -
+#aria2c --continue -x5 https://get.quicksync.io/${syncfile} -o sync.lz4 
+#lz4 -d sync.lz4 |tar xf -
+mv ${HOME}/.terrad/data/priv_validator_state.json /mnt/disks/data/terrad/data
 # everything is in place ..
 # lighting up daemons
 sudo systemctl daemon-reload
