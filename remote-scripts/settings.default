@@ -11,5 +11,6 @@ VALIDATOR_DISK_SIZE=300G
 VALIDATOR_MACHINE_TYPE=e2-highmem-2
 VALIDATOR_DISK_TYPE=pd-balanced
 #
+# you will need a API key - http://currencylayer.com?fpr=petes-fan-club
 CURRENCYLAYER_APIKEY=XXXXXXX
 #
