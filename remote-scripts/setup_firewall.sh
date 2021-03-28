@@ -7,6 +7,14 @@ gcloud compute firewall-rules create "validator-rule-ipc" \
    --network=default \
    --allow=tcp:26656 \
    --target-tags validator &
+
+# For now we use a portforward to get to 26657
+#gcloud compute firewall-rules create "validator-rule-ctrl" \
+#   --network=default \
+#   --allow=tcp:26657 \
+#   --source-tags ctrl \
+#   --target-tags validator &
+
 gcloud compute firewall-rules create "validator-rule-rest" \
    --network=default \
    --allow=tcp:1317 \

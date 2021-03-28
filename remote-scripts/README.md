@@ -9,3 +9,6 @@ Files:
 * [setup_firewall.sh](./setup_firewall.sh) configures incoming ports. 
 * [setup_key.sh](./setup_key.sh) generates a ssh-key. GCP does a lot of this automagically, but I'm old school.
 * [setup_validator.sh](./setup_validator.sh) copies the validator files over, and kicks off the [validator install](../validator/validator_run.sh)
+* [validator_connect.sh](./validate_connect.sh) establishes a port forward between your local machine and the validator. This allows you to run terracli commands locally
+* [validator_status.sh](./validate_status.sh) just connects to the validator and runs a status
+
