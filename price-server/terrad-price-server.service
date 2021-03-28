@@ -1,0 +1,16 @@
+[Unit]
+Description=Terra Oracle price server
+After=network.target
+
+[Service]
+Type=simple
+User=user
+ExecStart=/home/user/oracle-feeder/price-server/price-server-start.sh
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+LimitNOFILE=65535
+

@@ -20,11 +20,13 @@ gcloud compute firewall-rules create "validator-rule-rest" \
    --allow=tcp:1317 \
    --source-tags oracle \
    --target-tags validator &
-gcloud compute firewall-rules create "feeder-rule-rest" \
+
+gcloud compute firewall-rules create "priceserver-rule-rest" \
    --network=default \
    --allow=tcp:8532 \
    --source-tags oracle \
-   --target-tags feeder & 
+   --target-tags priceserver &
+
 wait 
 
 gcloud compute networks subnets update default --region=${DEFAULT_REGION} --enable-private-ip-google-access

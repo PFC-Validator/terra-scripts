@@ -17,7 +17,7 @@ cat /etc/fstab /tmp/fstab.add > /tmp/fstab
 sudo cp /tmp/fstab /etc/fstab 
 
 # setup the limits
-sudo cp validator/limits.terrad /etc/security/limits.d/limits.terrad 
+sudo cp validator/limits.terrad /etc/security/limits.d/terrad.conf
 # install the service definitions
 sudo cp validator/*.service /etc/systemd/system/
 
@@ -36,8 +36,10 @@ sudo apt-get install -y google-fluentd-catch-all-config
 sudo service google-fluentd start
 # GO .. as we're building it from source.
 # TBD do a checksum check
-curl -LO https://golang.org/dl/go1.16.2.linux-amd64.tar.gz
-tar xfz ./go1.16.2.linux-amd64.tar.gz
+# curl -LO https://golang.org/dl/go1.16.2.linux-amd64.tar.gz
+# tar xfz ./go1.16.2.linux-amd64.tar.gz
+curl -LO https://golang.org/dl/go1.15.10.linux-amd64.tar.gz
+tar xfz ./go1.15.10.linux-amd64.tar.gz
 sudo mv go /usr/local
 
 # set up paths for next time
@@ -52,7 +54,10 @@ cd core
 make install
 # terraD binaries are in the right place now
 terrad init ${MONIKER} --chain-id ${CHAIN_ID}
-rm -f .terrad/config/genesis.json 
+if [ -f ".terrad/config/genesis.json" ];
+then
+    rm -f .terrad/config/genesis.json 
+fi 
 # curl https://columbus-genesis.s3-ap-northeast-1.amazonaws.com/genesis.json > $HOME/.terrad/config/genesis.json
 curl https://raw.githubusercontent.com/terra-project/testnet/master/tequila-0004/genesis.json > $HOME/.terrad/config/genesis.json
 curl https://raw.githubusercontent.com/terra-project/testnet/master/tequila-0004/address.json > $HOME/.terrad/config/address.json
@@ -86,8 +91,8 @@ terracli config chain-id ${CHAIN_ID}
 #syncfile=$( curl https://terra.quicksync.io/sync.json|jq -r ".[]| select(.network==\"pruned\")|.file" |grep columbus-4)
 syncfile=tequila-4.20210215.tar.lz4
 cd /mnt/disks/data/terrad 
-#aria2c --continue -x5 https://get.quicksync.io/${syncfile} -o sync.lz4 
-#lz4 -d sync.lz4 |tar xf -
+aria2c --continue -x5 https://get.quicksync.io/${syncfile} -o sync.lz4 
+lz4 -d sync.lz4 |tar xf -
 mv ${HOME}/.terrad/data/priv_validator_state.json /mnt/disks/data/terrad/data
 # everything is in place ..
 # lighting up daemons
