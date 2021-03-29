@@ -5,7 +5,7 @@ echo "Using Project ID ${PROJECT_ID} to create VMs in zone ${DEFAULT_ZONE}"
 echo "waiting for confirmation. <enter> to continue, ^C to abort"
 read
 
-machine_image=$(gcloud compute images list --project cos-cloud --no-standard-images|grep cos-stable|cut -d " " -f1)
+#machine_image=$(gcloud compute images list --project cos-cloud --no-standard-images|grep cos-stable|cut -d " " -f1)
 
 gcloud compute instances create validator-02 \
  --image=ubuntu-minimal-2004-focal-v20210325 --image-project=ubuntu-os-cloud \
