@@ -39,7 +39,12 @@ sudo service google-fluentd start
 # curl -LO https://golang.org/dl/go1.16.2.linux-amd64.tar.gz
 # tar xfz ./go1.16.2.linux-amd64.tar.gz
 curl -LO https://golang.org/dl/go1.15.10.linux-amd64.tar.gz
+if ! sha256sum -c validator/go1.15.10.linux-amd64.tar.gz.sum ; then
+    echo "GO download did not match checksum"
+    exit 1
+fi
 tar xfz ./go1.15.10.linux-amd64.tar.gz
+
 sudo mv go /usr/local
 
 # set up paths for next time
@@ -74,10 +79,6 @@ sed 's/seeds = \"\"/seeds = \"341f51bf381566dfef0fc345c2aa882cbeebd320@public-se
 # Columbia
 # seeds = "20271e0591a7204d72280b87fdaa854f50c55e7e@106.10.59.48:26656,3b1c85b86528d10acc5475cb2c874714a69fde1e@110.234.23.153:26656,49333a4cb195d570ea244dab675a38abf97011d2@13.113.103.57:26656,7f19128de85ced9b62c3947fd2c2db2064462533@52.68.3.126:26656"
 
-#sed 's/db_dir = \"data\"/db_dir = \"\/mnt\/disks\/data\/terrad\/data\"/' < .terrad/config/config.toml.1 > .terrad/config/config.toml.2
-#sed 's/priv_validator_state_file = \"data/priv_validator_state_file = \"\/mnt\/disks\/data\/terrad\/data/' < .terrad/config/config.toml.2 > .terrad/config/config.toml.3
-#sed 's/wal_file = \"data/wal_file = \"\/mnt\/disks\/data\/terrad\/data/' < .terrad/config/config.toml.2 > .terrad/config/config.toml.3
-
 # app.toml
 # minimum-gas-prices = "0.01133uluna,0.15uusd,0.104938usdr,169.77ukrw,428.571umnt,0.125ueur,0.98ucny,16.37ujpy,0.11ugbp,10.88uinr,0.19ucad,0.14uchf,0.19uaud,0.2usgd,4.62uthb"
 cp .terrad/config/app.toml .terrad/config/app.toml.orig
@@ -92,7 +93,12 @@ terracli config chain-id ${CHAIN_ID}
 syncfile=tequila-4.20210215.tar.lz4
 cd /mnt/disks/data/terrad 
 aria2c --continue -x5 https://get.quicksync.io/${syncfile} -o sync.lz4 
-lz4 -d sync.lz4 |tar xf -
+if ! sha256sum -c ${HOME}/validator/sync.lz4.sum ; then
+    echo "Tequilla Quicksync file download did not match checksum"
+    exit 1
+fi
+# lz4 -d sync.lz4 |tar xf -
+tar --use-compress-program=lz4 -xf sync.lz4
 mv ${HOME}/.terrad/data/priv_validator_state.json /mnt/disks/data/terrad/data
 # everything is in place ..
 # lighting up daemons
