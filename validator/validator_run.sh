@@ -29,7 +29,8 @@ sudo bash add-logging-agent-repo.sh
 
 # additional stuff required on the box
 sudo apt-get update && sudo apt-get upgrade -y
-sudo apt-get install -y build-essential git jq liblz4-tool aria2 net-tools vim 'stackdriver-agent=6.*'
+# libleveldb-dev is needed if we want to build terrad with cleveldb. should be harmless otherwise
+sudo apt-get install -y build-essential git jq libleveldb-dev liblz4-tool aria2 net-tools vim 'stackdriver-agent=6.*'
 # logging stuff
 sudo apt-get install -y google-fluentd 
 sudo apt-get install -y google-fluentd-catch-all-config 
@@ -57,9 +58,12 @@ export GOPATH=${HOME}/go
 export PATH=${PATH}:/usr/local/go/bin:${PWD}/go/bin
 
 # get the code
+# TBD: currently pulls 'master', should it pull v.0.4.5 ?
 git clone https://github.com/terra-project/core/
 cd core
-git pull
+#
+# should this use cleveldb
+# go build -tags cleveldb
 make install
 # terraD binaries are in the right place now
 terrad init ${MONIKER} --chain-id ${CHAIN_ID}
