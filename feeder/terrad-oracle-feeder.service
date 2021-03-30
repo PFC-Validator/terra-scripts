@@ -1,0 +1,16 @@
+[Unit]
+Description=Terra Oracle Feeder
+After=network.target
+
+[Service]
+Type=simple
+User=user
+ExecStart=/home/user/oracle-feeder/feeder/start-feeder.sh
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+LimitNOFILE=65535
+

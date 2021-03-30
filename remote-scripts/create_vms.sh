@@ -20,7 +20,6 @@ gcloud compute instances create validator-02 \
 gcloud compute instances create feeder-01 \
     --zone ${DEFAULT_ZONE} \
     --image=ubuntu-minimal-2004-focal-v20210325 --image-project=ubuntu-os-cloud \
-
     --tags=oracle \
     --machine-type ${MACHINE_TYPE} &
 
