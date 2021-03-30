@@ -1,10 +1,10 @@
-# Feeder install files
-The feeder oracle talks to internal currency service
+# Price Server install files
+The price server talks to 3rd party currency services
 
 The following files are copied over to feeder machines and [feeder_run](./feeder_run.sh) is run.
 
 The files are 
-* [feeder_run](./feeder_run.sh) the one that does the install
+* [price-server_run](./price-server_run.sh) the one that does the install
 * [.bashrc](./.bashrc) setups up default paths
-* [start-feeder.sh](./start-feeder.sh) starts the feeder service
-* [terrad-oracle-feeder.service](./terrad-oracle-feeder.service) the terrad feeder service itself
+* [price-server-start.sh](./price-server-start.sh) starts the price server service
+* [terrad-price-server.service](./terrad-price-server.service) the terrad price server service itself
