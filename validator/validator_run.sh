@@ -152,7 +152,7 @@ popd
 
 mv ${HOME}/.terrad/data ${HOME}/.terrad/data.orig
 ln -s /mnt/disks/data/terrad/data ${HOME}/.terrad/
-exit 0
+
 #mv ${HOME}/.terrad/data/priv_validator_state.json /mnt/disks/data/terrad/data
 # everything is in place ..
 # lighting up daemons
