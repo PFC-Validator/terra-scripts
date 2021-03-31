@@ -1,5 +1,3 @@
-# the GCP project id
-PROJECT_ID=petes-fan-club
 DEFAULT_ZONE=asia-south1-c
 DEFAULT_REGION=asia-south1
 MACHINE_TYPE=f1-micro
