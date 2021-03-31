@@ -1,4 +1,5 @@
 /.idea
 *.private
+.*.swp
 /remote-scripts/setup_key_private
 /remote-scripts/setup_key_private.pub
