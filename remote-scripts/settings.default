@@ -22,4 +22,7 @@ VALIDATOR_SELF_DELEGATE=10
 VALIDATOR_AMOUNT=1000000000uluna
 #
 #
-ORACLE_PASSWORD=12345abc
+# you need to set this in your settings.private
+# this is also stored on the feeder machine in plaintext.
+# TODO: use a secret server for this
+ORACLE_PASSWORD=XXXXXXXXXX
