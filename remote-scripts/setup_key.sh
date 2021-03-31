@@ -2,7 +2,7 @@
 source settings.default
 source settings.private
 if [ -f ${SSH_KEY_FILE} ]; then
-    echo "cowardly refusign to overwrite your key file."
+    echo "cowardly refusing to overwrite your key file."
     echo "please manualy remove ${SSH_KEY_FILE} and repeat."
     echo "^c to interrupt. otherwise it will continue with this file"
     read 
