@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 source settings.default
 source settings.private
-current_project=$(gcloud config list core/project 2>/dev/null|grep project|cut -d= -f2-)
+current_project=$(gcloud config list --format 'value(core.project)' 2>/dev/null)
+
 echo "Using Project ID ${current_project} to create VMs in zone ${DEFAULT_ZONE}"
 echo "waiting for confirmation. <enter> to continue, ^C to abort"
 read
