@@ -6,7 +6,8 @@ After=network.target
 Type=simple
 User=user
 ExecStart=/home/user/oracle-feeder/price-server/price-server-start.sh
-Restart=on-abort
+Restart=on-failure
+RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target
