@@ -21,6 +21,6 @@ VALIDATOR_AMOUNT=1000000000uluna
 #
 #
 # you need to set this in your settings.private
-# this is also stored on the feeder machine in plaintext.
+# this is accessed from the feeder machine via the google secret API.
 # TODO: use a secret server for this
 ORACLE_PASSWORD=XXXXXXXXXX

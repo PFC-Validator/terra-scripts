@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 cd /home/user/oracle-feeder/feeder
 source /home/user/oracle_pub_key.env 
+ORACLE_PASS=$(gcloud secrets versions access latest --secret ORACLE_PASSWORD)
 
 #	   --lcd http://validator-01:1317 \
 npm start vote -- \

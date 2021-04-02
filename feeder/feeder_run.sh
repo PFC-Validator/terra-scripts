@@ -3,14 +3,13 @@
 
 CHAIN_ID=$1
 VALIDATOR_KEY=$2
-ORACLE_PASS=$3
 
 #TODO use GCP security
 echo "CHAIN_ID=${CHAIN_ID}" > ${HOME}/oracle_pub_key.env 
 chmod 600  ${HOME}/oracle_pub_key.env 
 echo "VALIDATOR_KEY=${VALIDATOR_KEY}" >> ${HOME}/oracle_pub_key.env 
-echo "ORACLE_PASS=${ORACLE_PASS}" >> ${HOME}/oracle_pub_key.env 
-
+#echo "ORACLE_PASS=${ORACLE_PASS}" >> ${HOME}/oracle_pub_key.env 
+ORACLE_PASS=$(gcloud secrets versions access latest --secret ORACLE_PASSWORD)
 # setup the limits
 sudo cp feeder/limits.terrad /etc/security/limits.d/terrad.conf
 # install the service definitions
@@ -43,7 +42,7 @@ git clone https://github.com/terra-project/oracle-feeder.git
 pushd oracle-feeder/feeder
 npm install
 
-echo "please use password ${ORACLE_PASS}"
+echo "please use password ORACLE_PASS"
 echo "and your oracle words"
 npm start update-key
 popd
