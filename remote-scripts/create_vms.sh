@@ -7,6 +7,23 @@ echo "Using Project ID ${current_project} to create VMs in zone ${DEFAULT_ZONE}"
 echo "waiting for confirmation. <enter> to continue, ^C to abort"
 read
 
+gcloud iam service-accounts create feeder \
+ 	 --description "service account to use on oracle feeder machines" 
+	 --display-name="feeder"
+
+email=$(gcloud iam service-accounts list --filter display_name='feeder' --format="value(email)")
+
+# don't think this is required
+#gcloud secrets add-iam-policy-binding my-secret2    \
+#   --member="serviceAccount:${email}"  \
+#   --role="roles/secretmanager.secretAccessor"
+
+# first two are for monitoring   
+gcloud projects add-iam-policy-binding ${current_project} --member="serviceAccount:${email}" --role="roles/logging.logWriter"
+gcloud projects add-iam-policy-binding ${current_project} --member="serviceAccount:${email}" --role="roles/monitoring.metricWriter"
+# next is to allow this service account to see secrets
+gcloud projects add-iam-policy-binding ${current_project} --member="serviceAccount:${email}" --role="roles/secretmanager.secretAccessor"
+
 #machine_image=$(gcloud compute images list --project cos-cloud --no-standard-images|grep cos-stable|cut -d " " -f1)
 
 gcloud compute instances create validator-01 \
@@ -22,6 +39,8 @@ gcloud compute instances create feeder-01 \
     --zone ${DEFAULT_ZONE} \
     --image=ubuntu-minimal-2004-focal-v20210325 --image-project=ubuntu-os-cloud \
     --tags=oracle \
+    --service-account ${email}  \
+	  --scopes cloud-platform \
     --machine-type ${MACHINE_TYPE} &
 
 # TODO determine if this really needs an external IP
