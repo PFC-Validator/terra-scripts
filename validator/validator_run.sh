@@ -135,7 +135,9 @@ case "${CHAIN_ID}" in
         read
         ;;
     "tequila-0004")
-        syncfile=tequila-4.20210215.tar.lz4
+       # syncfile=tequila-4.20210215.tar.lz4
+        syncfile=$( curl https://terra.quicksync.io/sync.json|jq -r ".[]| select(.network==\"pruned\")|.file" |grep columbus-4)
+        echo "syncfile = ${syncfile}"
         aria2c -x5 https://get.quicksync.io/${syncfile} -o sync.lz4 
         if ! sha256sum -c ${HOME}/validator/sync.lz4.sum ; then
             echo "Tequilla Quicksync file download did not match checksum"
