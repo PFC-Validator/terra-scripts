@@ -128,7 +128,8 @@ case "${CHAIN_ID}" in
         echo "syncfile = ${syncfile}"
         aria2c  -x5 https://get.quicksync.io/${syncfile}
         curl -O  https://get.quicksync.io/${syncfile}.checksum
-        curl -s https://lcd.terra.dev/txs/`curl -s https://get.quicksync.io/$FILENAME.hash`|jq -r '.tx.value.memo'|sha512sum -c
+        hash=$(curl -s https://get.quicksync.io/${syncfile}.hash)
+        curl -s https://lcd.terra.dev/txs/${hash}|jq -r '.tx.value.memo'|sha512sum -c
         ${HOME}/validator/checksum.sh $FILENAME
         echo "exit code $?"
         echo "waiting..."
@@ -141,9 +142,10 @@ case "${CHAIN_ID}" in
         #aria2c -x5 https://get.quicksync.io/${syncfile} -o sync.lz4 
         aria2c  -x5 https://get.quicksync.io/${syncfile}
         curl -O  https://get.quicksync.io/${syncfile}.checksum
-        curl -s https://tequila-lcd.terra.dev/txs/`curl -s https://get.quicksync.io/$FILENAME.hash`|jq -r '.tx.value.memo'|sha512sum -c
+        hash=$(curl -s https://get.quicksync.io/${syncfile}.hash)
+        curl -s https://tequila-lcd.terra.dev/txs/${hash} |jq -r '.tx.value.memo'|sha512sum -c
      
-        tar --use-compress-program=lz4 -xf sync.lz4
+        tar --use-compress-program=lz4 -xf ${syncfile}.lz4
         ;;
     *)
         echo "${CHAIN_ID} not known"
