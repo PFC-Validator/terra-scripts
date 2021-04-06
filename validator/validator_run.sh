@@ -118,6 +118,7 @@ sed 's/minimum-gas-prices = \"\"/minimum-gas-prices = \"0.01133uluna,0.15uusd,0.
 popd
 terracli config node http://127.0.0.1:26657
 terracli config chain-id ${CHAIN_ID}
+chmod 700 ${HOME}/validator/checksum.sh
 
 
 pushd /mnt/disks/data/terrad 
@@ -130,7 +131,7 @@ case "${CHAIN_ID}" in
         curl -O  https://get.quicksync.io/${syncfile}.checksum
         hash=$(curl -s https://get.quicksync.io/${syncfile}.hash)
         curl -s https://lcd.terra.dev/txs/${hash}|jq -r '.tx.value.memo'|sha512sum -c
-        ${HOME}/validator/checksum.sh $FILENAME
+        ${HOME}/validator/checksum.sh ${syncfile}
         echo "exit code $?"
         echo "waiting..."
         read
@@ -143,9 +144,10 @@ case "${CHAIN_ID}" in
         aria2c  -x5 https://get.quicksync.io/${syncfile}
         curl -O  https://get.quicksync.io/${syncfile}.checksum
         hash=$(curl -s https://get.quicksync.io/${syncfile}.hash)
-        curl -s https://tequila-lcd.terra.dev/txs/${hash} |jq -r '.tx.value.memo'|sha512sum -c
-     
-        tar --use-compress-program=lz4 -xf ${syncfile}.lz4
+        # Note: this is stored on mainnet. this is not a bug
+        curl -s https://lcd.terra.dev/txs/${hash} |jq -r '.tx.value.memo'|sha512sum -c
+        ${HOME}/validator/checksum.sh ${syncfile}
+        tar --use-compress-program=lz4 -xf ${syncfile}
         ;;
     *)
         echo "${CHAIN_ID} not known"
