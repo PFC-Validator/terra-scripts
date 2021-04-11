@@ -33,11 +33,6 @@ sudo apt-get install -y google-fluentd-catch-all-config
 sudo service google-fluentd start
 sudo apt-get install -y nodejs
 
-
-# set up paths for next time
-mv feeder/.bashrc ${HOME}
-chmod 755 ${HOME}/.bashrc
-
 git clone https://github.com/terra-project/oracle-feeder.git
 pushd oracle-feeder/feeder
 npm install
