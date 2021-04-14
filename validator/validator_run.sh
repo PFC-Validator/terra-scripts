@@ -3,6 +3,8 @@
 MONIKER=$1
 CHAIN_ID=$2
 
+echo "${MONIKER}"
+echo "${CHAIN_ID}"
 # setup the drive
 sudo mkfs.ext4 -m 0 -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb
 sudo mkdir -p /mnt/disks/data
@@ -67,7 +69,7 @@ git checkout v0.4.6
 # go build -tags cleveldb
 make install
 # terraD binaries are in the right place now
-terrad init ${MONIKER} --chain-id ${CHAIN_ID}
+terrad init "${MONIKER}" --chain-id ${CHAIN_ID}
 if [ -f ".terrad/config/genesis.json" ];
 then
     rm -f .terrad/config/genesis.json 
