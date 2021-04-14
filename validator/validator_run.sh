@@ -58,10 +58,10 @@ export GOPATH=${HOME}/go
 export PATH=${PATH}:/usr/local/go/bin:${PWD}/go/bin
 
 # get the code
-# TBD: currently pulls 'master', should it pull v0.4.5 ?
+# TBD: currently pulls 'master', should it pull v0.4.6 ?
 git clone https://github.com/terra-project/core/
 cd core
-git checkout v0.4.5
+git checkout v0.4.6
 #
 # should this use cleveldb
 # go build -tags cleveldb
