@@ -1,0 +1,17 @@
+# other things that are useful
+# to store snapshot
+gcloud compute disks create validator-snapshot --size 500G --type pd-balanced
+gcloud compute instances attach-disk validator-02 --disk validator-snapshot
+
+# on VM
+sudo lsblk
+sudo mkfs.ext4 -m 0 -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdc 
+sudo mkdir -p /mnt/disks/snapshot
+sudo mount -o discard,defaults /dev/sdc /mnt/disks/snapshot
+
+cd /mnt/disks/snapshot
+sudo mkdir sync 
+sudo chown user sync
+syncfile=$( curl https://terra.quicksync.io/sync.json|jq -r ".[]| select(.network==\"pruned\")|.file" |grep columbus-4)
+echo "syncfile = ${syncfile}"
+aria2c  -x5 https://get.quicksync.io/${syncfile}
