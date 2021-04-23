@@ -17,3 +17,4 @@ a big thanks to [Chain Layer](https://terra.quicksync.io/) and [Stake Systems](h
 If you think this was useful, feel free to delegate to the [PFC](https://station.terra.money/validator/terravaloper12g4nkvsjjnl0t7fvq3hdcw7y8dc9fq69nyeu9q) validator. It will help defray the costs.
 
 [PFC](https://twitter.com/PFC_Validator) - Dedicated to the people who introduced us to Terra/Luna. 
+
