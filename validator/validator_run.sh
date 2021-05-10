@@ -32,7 +32,7 @@ sudo bash add-logging-agent-repo.sh
 # additional stuff required on the box
 sudo apt-get update && sudo apt-get upgrade -y
 # libleveldb-dev is needed if we want to build terrad with cleveldb. should be harmless otherwise
-sudo apt-get install -y build-essential git jq libleveldb-dev liblz4-tool aria2 net-tools vim 'stackdriver-agent=6.*'
+sudo apt-get install -y build-essential git jq pv libleveldb-dev liblz4-tool aria2 net-tools vim 'stackdriver-agent=6.*'
 # logging stuff
 sudo apt-get install -y google-fluentd 
 sudo apt-get install -y google-fluentd-catch-all-config 
@@ -41,12 +41,12 @@ sudo service google-fluentd start
 # TBD do a checksum check
 # curl -LO https://golang.org/dl/go1.16.2.linux-amd64.tar.gz
 # tar xfz ./go1.16.2.linux-amd64.tar.gz
-curl -LO https://golang.org/dl/go1.15.10.linux-amd64.tar.gz
-if ! sha256sum -c validator/go1.15.10.linux-amd64.tar.gz.sum ; then
+curl -LO https://golang.org/dl/go1.15.12.linux-amd64.tar.gz
+if ! sha256sum -c validator/go1.15.12.linux-amd64.tar.gz.sum ; then
     echo "GO download did not match checksum"
     exit 1
 fi
-tar xfz ./go1.15.10.linux-amd64.tar.gz
+tar xfz ./go1.15.12.linux-amd64.tar.gz
 if [ -d "/usr/local/go" ]; 
 then
     sudo rm -rf /usr/local/go
@@ -149,7 +149,8 @@ case "${CHAIN_ID}" in
         # Note: this is stored on mainnet. this is not a bug
         curl -s https://lcd.terra.dev/txs/${hash} |jq -r '.tx.value.memo'|sha512sum -c
         ${HOME}/validator/checksum.sh ${syncfile}
-        tar --use-compress-program=lz4 -xf ${syncfile}
+        pv ${syncfile} | lz4 -dc | tar xf -
+        # tar --use-compress-program=lz4 -xf ${syncfile}
         ;;
     *)
         echo "${CHAIN_ID} not known"
