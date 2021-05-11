@@ -17,8 +17,8 @@ terracli tx staking create-validator --pubkey ${validator} \
      --min-self-delegation "${VALIDATOR_SELF_DELEGATE}" \
      --moniker "${MONIKER}" \
      --chain-id "${CHAIN_ID}" \
-     --details "Setup using petes-fan-club scripts. https://github.com/petes-fan-club/terra-scripts"  \
-     --memo "setup using petes-fan-club. Thank you" \
+     --details "Setup using PFC scripts. https://github.com/PFC-Validator/terra-scripts " \
+     --memo "setup using PFC. Thank you" \
      --gas-prices="1.5uluna" --gas-adjustment=1.4 -y
  
  #terracli tx staking edit-validator \
@@ -26,6 +26,6 @@ terracli tx staking create-validator --pubkey ${validator} \
  #    --moniker "${MONIKER}" \
  #    --chain-id "${CHAIN_ID}" \
  #    --security-contact "none-set@example.com" \
- #    --details "Setup using petes-fan-club scripts."  \
+ #    --details "Setup using PFC scripts."  \
  #    --memo "hi mom"  -y \
  #    --fees "3000uluna"
