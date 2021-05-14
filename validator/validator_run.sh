@@ -115,7 +115,7 @@ esac
 
 # app.toml
 cp .terrad/config/app.toml .terrad/config/app.toml.orig
-sed 's/minimum-gas-prices = \"\"/minimum-gas-prices = \"0.01133uluna,0.15uusd,0.104938usdr,169.77ukrw,428.571umnt,0.125ueur,0.98ucny,16.37ujpy,0.11ugbp,10.88uinr,0.19ucad,0.14uchf,0.19uaud,0.2usgd,4.62uthb\"/' < ${HOME}/.terrad/config/app.toml.orig > ${HOME}/.terrad/config/app.toml
+sed 's/minimum-gas-prices = \"\"/minimum-gas-prices = \"0.01133uluna,0.15uusd,0.104938usdr,169.77ukrw,428.571umnt,0.125ueur,0.98ucny,16.37ujpy,0.11ugbp,10.88uinr,0.19ucad,0.14uchf,0.19uaud,0.2usgd,4.62uthb,1.25usek\"/' < ${HOME}/.terrad/config/app.toml.orig > ${HOME}/.terrad/config/app.toml
 
 popd
 terracli config node http://127.0.0.1:26657

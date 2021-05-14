@@ -37,7 +37,8 @@ pushd oracle-feeder/price-server
 npm install
 # Copy sample config file
 # TODO SED
-sed "0,/apiKey:/{s/apiKey: ''/apiKey: '${CURRENCYLAYER_APIKEY}'/}" < ./config/default-sample.js > ./config/default.js
+sed "0,/apiKey:/{s/apiKey: ''/apiKey: '${CURRENCYLAYER_APIKEY}'/}" < ./config/default-sample.js > ./config/default.js.1
+sed "s/'KRW\/THB',/'KRW\/TBH','KRW\/SEK',/" < ./config/default.js.1 > ./config/default.js
 popd
 mv price-server/price-server-start.sh oracle-feeder/price-server
 

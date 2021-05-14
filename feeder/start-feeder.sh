@@ -8,7 +8,7 @@ npm start vote -- \
 	   --source http://price-server-01:8532/latest \
 	   --lcd https://lcd.terra.dev \
 	   --chain-id "${CHAIN_ID}" \
-	--denoms sdr,krw,usd,mnt,eur,cny,jpy,gbp,inr,cad,chf,hkd,aud,sgd \
+	--denoms sdr,krw,usd,mnt,eur,cny,jpy,gbp,inr,cad,chf,hkd,aud,sgd,sek \
 	--validator "${VALIDATOR_KEY}" \
 	--password "${ORACLE_PASS}" \
 	--gas-prices 169.77ukrw
