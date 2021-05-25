@@ -2,7 +2,7 @@
 source settings.default
 source settings.private
 current_project=$(gcloud config get-value project )
-vm_type="projects/ubuntu-os-cloud/global/images/ubuntu-minimal-2004-focal-v20210416"
+vm_type="projects/ubuntu-os-cloud/global/images/ubuntu-minimal-2004-focal-v20210511"
 
 echo "Using Project ID ${current_project} to create VMs in zone ${DEFAULT_ZONE}"
 echo "waiting for confirmation. <enter> to continue, ^C to abort"
@@ -27,7 +27,7 @@ gcloud projects add-iam-policy-binding ${current_project} --member="serviceAccou
 
 #machine_image=$(gcloud compute images list --project cos-cloud --no-standard-images|grep cos-stable|cut -d " " -f1)
 
-gcloud compute instances create validator-01 \
+gcloud compute instances create validator-${CHAIN_ID}-01 \
     --image=${vm_type} \
     --image-project=ubuntu-os-cloud \
     --zone ${DEFAULT_ZONE} \
@@ -54,10 +54,10 @@ gcloud compute instances create price-server-01 \
     --tags=priceserver \
     --machine-type ${MACHINE_TYPE} &
 
-gcloud compute disks create validator-01-disk \
+gcloud compute disks create validator-${CHAIN_ID}-01-disk \
   --size ${VALIDATOR_DISK_SIZE} \
   --type ${VALIDATOR_DISK_TYPE} &
   
 wait
 
-gcloud compute instances attach-disk validator-01 --disk validator-01-disk
+gcloud compute instances attach-disk validator-${CHAIN_ID}-01 --disk validator-${CHAIN_ID}-01-disk

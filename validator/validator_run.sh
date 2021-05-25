@@ -21,7 +21,14 @@ sudo cp /tmp/fstab /etc/fstab
 # setup the limits
 sudo cp validator/limits.terrad /etc/security/limits.d/terrad.conf
 # install the service definitions
-sudo cp validator/*.service /etc/systemd/system/
+case "${CHAIN_ID}" in 
+    "bombay-0005")
+	sudo cp validator/terrad.service /etc/systemd/system/
+	;;
+    *)
+	sudo cp validator/*.service /etc/systemd/system/
+	;;
+esac
 
 # Google's monitoring agent 
 curl -sSO https://dl.google.com/cloudagents/add-monitoring-agent-repo.sh 
@@ -63,7 +70,16 @@ export PATH=${PATH}:/usr/local/go/bin:${PWD}/go/bin
 # TBD: currently pulls 'master', should it pull v0.4.6 ?
 git clone https://github.com/terra-project/core/
 cd core
-git checkout v0.4.6
+case "${CHAIN_ID}" in 
+    "bombay-0005")
+	git checkout v0.5.0-beta1
+	;;
+    *)
+	git checkout v0.4.6
+	;;
+esac
+
+
 #
 # should this use cleveldb
 # go build -tags cleveldb
@@ -88,24 +104,41 @@ case "${CHAIN_ID}" in
         curl https://raw.githubusercontent.com/terra-project/testnet/master/tequila-0004/address.json > $HOME/.terrad/config/address.json
         curl https://network.terra.dev/testnet/addrbook.json > $HOME/.terrad/config/addrbook.json
         ;;
+    "bombay-0005")
+        curl https://raw.githubusercontent.com/terra-project/testnet/master/bombay-0005/genesis.json > $HOME/.terra/config/genesis.json
+        curl https://raw.githubusercontent.com/terra-project/testnet/master/bombay-0005/address.json > $HOME/.terra/config/address.json
+#        curl https://network.terra.dev/testnet/addrbook.json > $HOME/.terrad/config/addrbook.json
+	;;
     *)
         echo "${CHAIN_ID} not known"
         exit 1
     ;;
 esac 
+case "${CHAIN_ID}" in 
+    "bombay-0005")
+	pushd ${HOME}/.terra
+	;;
+    *)
+	pushd ${HOME}/.terrad
+	;;
+esac
 
-pushd ${HOME}
-cp .terrad/config/config.toml .terrad/config/config.toml.orig
+
+#pushd ${HOME}
+cp ./config/config.toml ./config/config.toml.orig
 # sed script to fix indexer line to 'null'
 # sed 's/indexer = \"kv\"/indexer = \"null\"/' < .terrad/config/config.toml.orig > .terrad/config/config.toml.1 
-sed 's/\"data/\"\/mnt\/disks\/data\/terrad\/data/' < .terrad/config/config.toml.orig > .terrad/config/config.toml.1
+sed 's/\"data/\"\/mnt\/disks\/data\/terrad\/data/' < ./config/config.toml.orig > ./config/config.toml.1
 case "${CHAIN_ID}" in 
     "Columbus-4") 
         echo "Columbia not supported yet"
-        sed 's/seeds = \"\"/seeds = \"20271e0591a7204d72280b87fdaa854f50c55e7e@106.10.59.48:26656,3b1c85b86528d10acc5475cb2c874714a69fde1e@110.234.23.153:26656,49333a4cb195d570ea244dab675a38abf97011d2@13.113.103.57:26656,7f19128de85ced9b62c3947fd2c2db2064462533@52.68.3.126:26656\"/' < .terrad/config/config.toml.1 > .terrad/config/config.toml
+        sed 's/seeds = \"\"/seeds = \"20271e0591a7204d72280b87fdaa854f50c55e7e@106.10.59.48:26656,3b1c85b86528d10acc5475cb2c874714a69fde1e@110.234.23.153:26656,49333a4cb195d570ea244dab675a38abf97011d2@13.113.103.57:26656,7f19128de85ced9b62c3947fd2c2db2064462533@52.68.3.126:26656\"/' < ./config/config.toml.1 > ./config/config.toml
         ;;
     "tequila-0004")
-        sed 's/seeds = \"\"/seeds = \"341f51bf381566dfef0fc345c2aa882cbeebd320@public-seed2.terra.dev:36656\"/' < .terrad/config/config.toml.1 > .terrad/config/config.toml
+        sed 's/seeds = \"\"/seeds = \"341f51bf381566dfef0fc345c2aa882cbeebd320@public-seed2.terra.dev:36656\"/' < ./config/config.toml.1 > ./config/config.toml
+        ;;
+    "bombay-0005")
+        sed 's/seeds = \"\"/seeds = \"eb4168239744007adcce028a397fc2addf4b2520@54.150.118.40:36656,2e13408cbe993a291caf02946e902753f7f95a71@3.34.120.243:26656,67f83663158a908b1a0784e642eafde880dd2929@65.21.157.38:26656,f9cb325f1ca9296c2853c2f416991e34927e23f7@207.180.213.123:26656,c7fdeca4135e56149f5f5d84462c9eb9f059edb8@52.78.140.220:26656,bdc57c5a7f11040bed560fceb7d9b17c117e3423@193.239.85.118:26656\"/' < ./config/config.toml.1 > ./config/config.toml
         ;;
     *)
         echo "${CHAIN_ID} not known"
@@ -114,12 +147,21 @@ case "${CHAIN_ID}" in
 esac
 
 # app.toml
-cp .terrad/config/app.toml .terrad/config/app.toml.orig
-sed 's/minimum-gas-prices = \"\"/minimum-gas-prices = \"0.01133uluna,0.15uusd,0.104938usdr,169.77ukrw,428.571umnt,0.125ueur,0.98ucny,16.37ujpy,0.11ugbp,10.88uinr,0.19ucad,0.14uchf,0.19uaud,0.2usgd,4.62uthb,1.25usek\"/' < ${HOME}/.terrad/config/app.toml.orig > ${HOME}/.terrad/config/app.toml
+cp ./config/app.toml ./config/app.toml.orig
+sed 's/minimum-gas-prices = \"\"/minimum-gas-prices = \"0.01133uluna,0.15uusd,0.104938usdr,169.77ukrw,428.571umnt,0.125ueur,0.98ucny,16.37ujpy,0.11ugbp,10.88uinr,0.19ucad,0.14uchf,0.19uaud,0.2usgd,4.62uthb,1.25usek\"/' < ./config/app.toml.orig > ./config/app.toml
 
 popd
-terracli config node http://127.0.0.1:26657
-terracli config chain-id ${CHAIN_ID}
+case "${CHAIN_ID}" in 
+    "bombay-0005")
+	echo "skipping terracli as it isn't installed"
+	;;
+    *)
+	terracli config node http://127.0.0.1:26657
+	terracli config chain-id ${CHAIN_ID}
+	;;
+esac
+
+
 chmod 700 ${HOME}/validator/checksum.sh
 
 
@@ -134,9 +176,13 @@ case "${CHAIN_ID}" in
         hash=$(curl -s https://get.quicksync.io/${syncfile}.hash)
         curl -s https://lcd.terra.dev/txs/${hash}|jq -r '.tx.value.memo'|sha512sum -c
         ${HOME}/validator/checksum.sh ${syncfile}
+
         echo "exit code $?"
         echo "waiting..."
         read
+
+	mv ${HOME}/.terrad/data ${HOME}/.terrad/data.orig
+	ln -s /mnt/disks/data/terrad/data ${HOME}/.terrad/
         ;;
     "tequila-0004")
        # syncfile=tequila-4.20210215.tar.lz4
@@ -151,7 +197,16 @@ case "${CHAIN_ID}" in
         ${HOME}/validator/checksum.sh ${syncfile}
         pv ${syncfile} | lz4 -dc | tar xf -
         # tar --use-compress-program=lz4 -xf ${syncfile}
+
+	mv ${HOME}/.terrad/data ${HOME}/.terrad/data.orig
+	ln -s /mnt/disks/data/terrad/data ${HOME}/.terrad/
         ;;
+    "bombay-0005")
+#	mkdir /mnt/disks/data/terrad/data
+	echo "${CHAIN_ID} no syncing available"
+	mv ${HOME}/.terra/data ${HOME}/.terra/data.orig
+	ln -s /mnt/disks/data/terrad/data ${HOME}/.terra/
+	;;
     *)
         echo "${CHAIN_ID} not known"
         exit 1
@@ -159,14 +214,21 @@ case "${CHAIN_ID}" in
 esac
 popd
 
-mv ${HOME}/.terrad/data ${HOME}/.terrad/data.orig
-ln -s /mnt/disks/data/terrad/data ${HOME}/.terrad/
 
 #mv ${HOME}/.terrad/data/priv_validator_state.json /mnt/disks/data/terrad/data
 # everything is in place ..
 # lighting up daemons
 sudo systemctl daemon-reload
 sudo systemctl enable terrad 
-sudo systemctl enable terracli-server
+case "${CHAIN_ID}" in 
+    "bombay-0005")
+	echo "terracli-server needs to be enabled in [api] section"
+	;;
+    *)
+	sudo systemctl enable terracli-server
+	;;
+esac
+
+echo "Remember to hand-edit /etc/stackdriver/collectd.conf Interval for non-prod boxes"
 # and machine is ready to rock&roll.
 sudo reboot

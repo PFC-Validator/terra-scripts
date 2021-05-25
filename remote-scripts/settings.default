@@ -3,10 +3,13 @@ DEFAULT_REGION=asia-south1
 MACHINE_TYPE=f1-micro
 SSH_KEY_FILE=setup_key_private
 MONIKER=my_test_validator
-CHAIN_ID=tequila-0004
+#CHAIN_ID=tequila-0004
+#CHAIN_ID=columbus-4
+CHAIN_ID=bombay-0005
 VALIDATOR_DISK_SIZE=200G
 # you can try the freebie level.. sadly you need a bigger box to even run the testnet. 
 VALIDATOR_MACHINE_TYPE=e2-standard-4
+# you can probably go for a cheaper disk type for testnet. try pd-standard 
 VALIDATOR_DISK_TYPE=pd-balanced
 #
 # you will need a API key - http://currencylayer.com?fpr=petes-fan-club

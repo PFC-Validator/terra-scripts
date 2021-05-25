@@ -2,7 +2,7 @@
 source settings.default
 source settings.private
 
-validator=$(gcloud compute ssh --ssh-key-file=./setup_key_private user@validator-01 -- -q terrad tendermint show-validator) 
+validator=$(gcloud compute ssh --ssh-key-file=./setup_key_private user@validator-${CHAIN_ID}-01 -- -q terrad tendermint show-validator) 
 validator=$(echo $validator | tr -d '\r')
 
 #
