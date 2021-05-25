@@ -106,7 +106,7 @@ case "${CHAIN_ID}" in
         ;;
     "bombay-0005")
         curl https://raw.githubusercontent.com/terra-project/testnet/master/bombay-0005/genesis.json > $HOME/.terra/config/genesis.json
-        curl https://raw.githubusercontent.com/terra-project/testnet/master/bombay-0005/address.json > $HOME/.terra/config/address.json
+#        curl https://raw.githubusercontent.com/terra-project/testnet/master/bombay-0005/address.json > $HOME/.terra/config/address.json
 #        curl https://network.terra.dev/testnet/addrbook.json > $HOME/.terrad/config/addrbook.json
 	;;
     *)
