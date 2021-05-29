@@ -37,7 +37,7 @@ gcloud compute instances create validator-${CHAIN_ID}-01 \
 # TODO determine if this really needs an external IP
 #      --no-address \
 #
-gcloud compute instances create feeder-01 \
+gcloud compute instances create feeder-${CHAIN_ID}-01 \
     --zone ${DEFAULT_ZONE} \
     --image=${vm_type} \
     --image-project=ubuntu-os-cloud \
