@@ -22,7 +22,7 @@ sudo cp /tmp/fstab /etc/fstab
 sudo cp validator/limits.terrad /etc/security/limits.d/terrad.conf
 # install the service definitions
 case "${CHAIN_ID}" in 
-    "bombay-0005")
+    "bombay-0006")
 	sudo cp validator/terrad.service /etc/systemd/system/
 	;;
     *)
@@ -71,8 +71,8 @@ export PATH=${PATH}:/usr/local/go/bin:${PWD}/go/bin
 git clone https://github.com/terra-project/core/
 cd core
 case "${CHAIN_ID}" in 
-    "bombay-0005")
-	git checkout v0.5.0-beta1
+    "bombay-0006")
+	git checkout v0.5.0-beta3
 	;;
     *)
 	git checkout v0.4.6
@@ -104,10 +104,8 @@ case "${CHAIN_ID}" in
         curl https://raw.githubusercontent.com/terra-project/testnet/master/tequila-0004/address.json > $HOME/.terrad/config/address.json
         curl https://network.terra.dev/testnet/addrbook.json > $HOME/.terrad/config/addrbook.json
         ;;
-    "bombay-0005")
-        curl https://raw.githubusercontent.com/terra-project/testnet/master/bombay-0005/genesis.json > $HOME/.terra/config/genesis.json
-#        curl https://raw.githubusercontent.com/terra-project/testnet/master/bombay-0005/address.json > $HOME/.terra/config/address.json
-#        curl https://network.terra.dev/testnet/addrbook.json > $HOME/.terrad/config/addrbook.json
+    "bombay-0006")
+        curl https://raw.githubusercontent.com/terra-project/testnet/master/bombay-0006/genesis.json > $HOME/.terra/config/genesis.json
 	;;
     *)
         echo "${CHAIN_ID} not known"
@@ -115,7 +113,7 @@ case "${CHAIN_ID}" in
     ;;
 esac 
 case "${CHAIN_ID}" in 
-    "bombay-0005")
+    "bombay-0006")
 	pushd ${HOME}/.terra
 	;;
     *)
@@ -137,8 +135,8 @@ case "${CHAIN_ID}" in
     "tequila-0004")
         sed 's/seeds = \"\"/seeds = \"341f51bf381566dfef0fc345c2aa882cbeebd320@public-seed2.terra.dev:36656\"/' < ./config/config.toml.1 > ./config/config.toml
         ;;
-    "bombay-0005")
-        sed 's/seeds = \"\"/seeds = \"eb4168239744007adcce028a397fc2addf4b2520@54.150.118.40:36656,2e13408cbe993a291caf02946e902753f7f95a71@3.34.120.243:26656,67f83663158a908b1a0784e642eafde880dd2929@65.21.157.38:26656,f9cb325f1ca9296c2853c2f416991e34927e23f7@207.180.213.123:26656,c7fdeca4135e56149f5f5d84462c9eb9f059edb8@52.78.140.220:26656,bdc57c5a7f11040bed560fceb7d9b17c117e3423@193.239.85.118:26656,2c7a1c74c793456209188a59fc01d9c7f139f5be@34.136.129.123:26656,e6be82b4a659964fad27ee14f844c222fe9abadf@104.197.21.152:26656\"/' < ./config/config.toml.1 > ./config/config.toml
+    "bombay-0006")
+        sed 's/seeds = \"\"/seeds = \"8eca04192d4d4d7da32149a3daedc4c24b75f4e7@3.34.163.215:26656\"/' < ./config/config.toml.1 > ./config/config.toml
         ;;
     *)
         echo "${CHAIN_ID} not known"
@@ -152,7 +150,7 @@ sed 's/minimum-gas-prices = \"\"/minimum-gas-prices = \"0.01133uluna,0.15uusd,0.
 
 popd
 case "${CHAIN_ID}" in 
-    "bombay-0005")
+    "bombay-0006")
 	echo "skipping terracli as it isn't installed"
 	;;
     *)
@@ -201,11 +199,12 @@ case "${CHAIN_ID}" in
 	mv ${HOME}/.terrad/data ${HOME}/.terrad/data.orig
 	ln -s /mnt/disks/data/terrad/data ${HOME}/.terrad/
         ;;
-    "bombay-0005")
+    "bombay-0006")
 #	mkdir /mnt/disks/data/terrad/data
 	echo "${CHAIN_ID} no syncing available"
 	mv ${HOME}/.terra/data ${HOME}/.terra/data.orig
 	ln -s /mnt/disks/data/terrad/data ${HOME}/.terra/
+	cp ${HOME}/.terra/data.orig/priv_validator_state.json ${HOME}/.terra/data/
 	;;
     *)
         echo "${CHAIN_ID} not known"
@@ -221,7 +220,7 @@ popd
 sudo systemctl daemon-reload
 sudo systemctl enable terrad 
 case "${CHAIN_ID}" in 
-    "bombay-0005")
+    "bombay-0006")
 	echo "terracli-server needs to be enabled in [api] section"
 	;;
     *)
