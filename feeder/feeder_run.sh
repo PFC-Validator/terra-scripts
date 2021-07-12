@@ -23,7 +23,7 @@ sudo bash add-logging-agent-repo.sh
 
 # NodeJS
 # TODO SECURITY replace with better way
-curl -fsSL https://deb.nodesource.com/setup_15.x | sudo -E bash -
+curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 # additional stuff required on the box
 sudo apt-get update && sudo apt-get upgrade -y
 sudo apt-get install -y build-essential git jq liblz4-tool aria2 net-tools vim 'stackdriver-agent=6.*'
