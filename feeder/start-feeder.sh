@@ -5,10 +5,9 @@ ORACLE_PASS=$(gcloud secrets versions access latest --secret ORACLE_PASSWORD)
 
 #	   --lcd http://validator-01:1317 \
 npm start vote -- \
-	   --source http://price-server-01:8532/latest \
-	   --lcd https://lcd.terra.dev \
-	   --chain-id "${CHAIN_ID}" \
-	--denoms sdr,krw,usd,mnt,eur,cny,jpy,gbp,inr,cad,chf,hkd,aud,sgd,sek,nok,dkk \
+	--source http://price-server-01:8532/latest \
+	--lcd https://lcd.terra.dev \
+	--chain-id "${CHAIN_ID}" \
 	--validator "${VALIDATOR_KEY}" \
 	--password "${ORACLE_PASS}" \
 	--gas-prices 169.77ukrw
