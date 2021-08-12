@@ -22,7 +22,7 @@ sudo cp /tmp/fstab /etc/fstab
 sudo cp validator/limits.terrad /etc/security/limits.d/terrad.conf
 # install the service definitions
 case "${CHAIN_ID}" in 
-    "bombay-0008")
+    "bombay-9")
 	sudo cp validator/terrad.service /etc/systemd/system/
 	;;
     *)
@@ -45,15 +45,14 @@ sudo apt-get install -y google-fluentd
 sudo apt-get install -y google-fluentd-catch-all-config 
 sudo service google-fluentd start
 # GO .. as we're building it from source.
-# TBD do a checksum check
-# curl -LO https://golang.org/dl/go1.16.2.linux-amd64.tar.gz
+curl -LO https://golang.org/dl/go1.16.7.linux-amd64.tar.gz
 # tar xfz ./go1.16.2.linux-amd64.tar.gz
-curl -LO https://golang.org/dl/go1.15.12.linux-amd64.tar.gz
-if ! sha256sum -c validator/go1.15.12.linux-amd64.tar.gz.sum ; then
+#curl -LO https://golang.org/dl/go1.15.12.linux-amd64.tar.gz
+if ! sha256sum -c validator/go1.16.7.linux-amd64.tar.gz.sum ; then
     echo "GO download did not match checksum"
     exit 1
 fi
-tar xfz ./go1.15.12.linux-amd64.tar.gz
+tar xfz ./go1.16.7.linux-amd64.tar.gz
 if [ -d "/usr/local/go" ]; 
 then
     sudo rm -rf /usr/local/go
@@ -71,8 +70,8 @@ export PATH=${PATH}:/usr/local/go/bin:${PWD}/go/bin
 git clone https://github.com/terra-project/core/
 cd core
 case "${CHAIN_ID}" in 
-    "bombay-0008")
-	git checkout v0.5.0-rc0
+    "bombay-9")
+	git checkout v0.5.0
 	;;
     *)
 	git checkout v0.4.6
@@ -104,8 +103,8 @@ case "${CHAIN_ID}" in
         curl https://raw.githubusercontent.com/terra-project/testnet/master/tequila-0004/address.json > $HOME/.terrad/config/address.json
         curl https://network.terra.dev/testnet/addrbook.json > $HOME/.terrad/config/addrbook.json
         ;;
-    "bombay-0008")
-        curl https://raw.githubusercontent.com/terra-project/testnet/master/bombay-0008/genesis.json > $HOME/.terra/config/genesis.json
+    "bombay-9")
+        curl https://raw.githubusercontent.com/terra-project/testnet/master/bombay-9/genesis.json > $HOME/.terra/config/genesis.json
 	;;
     *)
         echo "${CHAIN_ID} not known"
@@ -113,7 +112,7 @@ case "${CHAIN_ID}" in
     ;;
 esac 
 case "${CHAIN_ID}" in 
-    "bombay-0008")
+    "bombay-9")
 	pushd ${HOME}/.terra
 	;;
     *)
@@ -135,7 +134,7 @@ case "${CHAIN_ID}" in
     "tequila-0004")
         sed 's/seeds = \"\"/seeds = \"341f51bf381566dfef0fc345c2aa882cbeebd320@public-seed2.terra.dev:36656\"/' < ./config/config.toml.1 > ./config/config.toml
         ;;
-    "bombay-0008")
+    "bombay-9")
         sed 's/seeds = \"\"/seeds = \"8eca04192d4d4d7da32149a3daedc4c24b75f4e7@3.34.163.215:26656\"/' < ./config/config.toml.1 > ./config/config.toml
         ;;
     *)
@@ -150,7 +149,7 @@ sed 's/minimum-gas-prices = \"\"/minimum-gas-prices = \"0.01133uluna,0.15uusd,0.
 
 popd
 case "${CHAIN_ID}" in 
-    "bombay-0008")
+    "bombay-9")
 	echo "skipping terracli as it isn't installed"
 	;;
     *)
@@ -199,7 +198,7 @@ case "${CHAIN_ID}" in
 	mv ${HOME}/.terrad/data ${HOME}/.terrad/data.orig
 	ln -s /mnt/disks/data/terrad/data ${HOME}/.terrad/
         ;;
-    "bombay-0008")
+    "bombay-9")
 #	mkdir /mnt/disks/data/terrad/data
 	echo "${CHAIN_ID} no syncing available"
 	mv ${HOME}/.terra/data ${HOME}/.terra/data.orig
@@ -220,7 +219,7 @@ popd
 sudo systemctl daemon-reload
 sudo systemctl enable terrad 
 case "${CHAIN_ID}" in 
-    "bombay-0008")
+    "bombay-9")
 	echo "terracli-server needs to be enabled in [api] section"
 	;;
     *)
