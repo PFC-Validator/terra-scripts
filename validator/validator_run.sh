@@ -145,8 +145,8 @@ esac
 
 # app.toml
 cp ./config/app.toml ./config/app.toml.orig
-sed 's/minimum-gas-prices = \"\"/minimum-gas-prices = \"0.01133uluna,0.15uusd,0.104938usdr,169.77ukrw,428.571umnt,0.125ueur,0.98ucny,16.37ujpy,0.11ugbp,10.88uinr,0.19ucad,0.14uchf,0.19uaud,0.2usgd,4.62uthb,1.25usek,1.25unok,0.9udkk\"/' < ./config/app.toml.orig > ./config/app.toml
-
+sed 's/minimum-gas-prices = \"\"/minimum-gas-prices=\"0.013199uluna,0.38uusd,0.527101uaud,0.481912ucad,0.347244uchf,2.455638ucny,2.402775udkk,0.323109ueur,0.276745ugbp,2.950842uhkd,5450.0uidr,28.085651uinr,41.68797ujpy,443.515327ukrw,1061.675585umnt,3.314161unok,19.0uphp,0.267408usdr,3.314161usek,0.514572usgd,12.581803uthb\"/' < ./config/app.toml.orig > ./config/app.toml
+#minimum-gas-prices = \"0.01133uluna,0.15uusd,0.104938usdr,169.77ukrw,428.571umnt,0.125ueur,0.98ucny,16.37ujpy,0.11ugbp,10.88uinr,0.19ucad,0.14uchf,0.19uaud,0.2usgd,4.62uthb,1.25usek,1.25unok,0.9udkk\"/
 popd
 case "${CHAIN_ID}" in 
     "bombay-9")
