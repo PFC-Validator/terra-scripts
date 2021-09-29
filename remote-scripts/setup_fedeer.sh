@@ -12,7 +12,7 @@ else
     printf "${ORACLE_PASSWORD}" | gcloud secrets versions add ORACLE_PASSWORD --data-file=-
 fi
 #terracli tx oracle set-feeder <feeder-address> --from=<validator>
-terracli tx oracle set-feeder ${ORACLE_KEY} --from=validator --fees="30000uluna"
-gcloud compute scp --scp-flag=-r ../feeder/ user@feeder-${CHAIN_ID}-01: --ssh-key-file=./setup_key_private
-gcloud compute ssh user@feeder-${CHAIN_ID}-01 --ssh-key-file=./setup_key_private --  ./feeder/feeder_run.sh ${CHAIN_ID} ${VALIDATOR_KEY}
+#terracli tx oracle set-feeder ${ORACLE_KEY} --from=validator --fees="30000uluna"
+gcloud compute scp --zone ${DEFAULT_ZONE} --scp-flag=-r ../feeder/ user@feeder-${CHAIN_ID}-01: --ssh-key-file=./setup_key_private
+gcloud compute ssh --zone ${DEFAULT_ZONE} user@feeder-${CHAIN_ID}-01 --ssh-key-file=./setup_key_private --  ./feeder/feeder_run.sh ${CHAIN_ID} ${VALIDATOR_KEY}
 

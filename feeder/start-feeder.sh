@@ -9,5 +9,5 @@ npm start vote -- \
 	--lcd https://lcd.terra.dev \
 	--chain-id "${CHAIN_ID}" \
 	--validator "${VALIDATOR_KEY}" \
-	--password "${ORACLE_PASS}" \
-	--gas-prices 169.77ukrw
+	--password "${ORACLE_PASS}"
+#	--gas-prices 169.77ukrw
