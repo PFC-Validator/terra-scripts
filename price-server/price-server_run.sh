@@ -17,7 +17,7 @@ sudo bash add-logging-agent-repo.sh
 
 # NodeJS
 # TODO SECURITY replace with better way
-curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 # additional stuff required on the box
 sudo apt-get update && sudo apt-get upgrade -y
 sudo apt-get install -y build-essential git jq liblz4-tool aria2 net-tools vim 'stackdriver-agent=6.*'
@@ -37,7 +37,7 @@ pushd oracle-feeder/price-server
 npm install
 # Copy sample config file
 # TODO SED
-sed "0,/apiKey:/{s/apiKey: ''/apiKey: '${CURRENCYLAYER_APIKEY}'/}" < ./config/default-sample.js > ./config/default.js.1
+sed "0,/apiKey:/{s/apiKey: ''/apiKey: '${CURRENCYLAYER_APIKEY}'/}" < ./config/default-sample.js > ./config/default.js
 # sed "s/'KRW\/THB',/'KRW\/TBH',',/'KRW\/NOK',',/'KRW\/DKK','KRW\/SEK',/" < ./config/default.js.1 > ./config/default.js
 popd
 mv price-server/price-server-start.sh oracle-feeder/price-server
