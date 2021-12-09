@@ -72,10 +72,10 @@ git clone https://github.com/terra-money/core/
 cd core
 case "${CHAIN_ID}" in 
     "bombay-12")
-	git checkout v0.5.5-oracle
+	git checkout v0.5.12-oracle
 	;;
     *)
-	git checkout v0.5.5-oracle
+	git checkout v0.5.12-oracle
 	;;
 esac
 
