@@ -1,0 +1,15 @@
+[Unit]
+Description=Hermes IBC relayer
+#ConditionPathExists=/home/user/.cargo/bin/hermes
+#After=network.target secret-node.service cosmos.service osmo.service
+
+[Service]
+Type=simple
+User=user
+WorkingDirectory=/home/user
+ExecStart=/home/user/.cargo/bin/hermes start
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
