@@ -61,4 +61,4 @@ gcloud compute disks create validator-${CHAIN_ID}-01-disk \
   
 wait
 
-gcloud compute instances attach-disk validator-${CHAIN_ID}-01 --disk validator-${CHAIN_ID}-01-disk
+gcloud compute instances attach-disk validator-${CHAIN_ID}-01 --disk validator-${CHAIN_ID}-01-disk  --zone ${DEFAULT_ZONE}
