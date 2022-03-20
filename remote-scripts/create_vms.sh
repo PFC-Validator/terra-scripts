@@ -2,7 +2,7 @@
 source settings.default
 source settings.private
 current_project=$(gcloud config get-value project )
-vm_type="projects/ubuntu-os-cloud/global/images/ubuntu-minimal-2004-focal-v20220110b"
+vm_type="projects/ubuntu-os-cloud/global/images/ubuntu-minimal-2004-focal-v20220308"
 
 echo "Using Project ID ${current_project} to create VMs in zone ${DEFAULT_ZONE}"
 echo "waiting for confirmation. <enter> to continue, ^C to abort"

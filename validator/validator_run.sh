@@ -46,13 +46,14 @@ sudo apt-get install -y google-fluentd
 sudo apt-get install -y google-fluentd-catch-all-config 
 sudo service google-fluentd start
 # GO .. as we're building it from source.
-
-curl -LO https://golang.org/dl/go1.16.8.linux-amd64.tar.gz
+curl -LO https://go.dev/dl/go1.17.8.linux-amd64.tar.gz
+#curl -LO https://golang.org/dl/go1.16.8.linux-amd64.tar.gz
 
 if ! sha256sum -c validator/go1.16.8.linux-amd64.tar.gz.sum ; then
     echo "GO download did not match checksum"
     exit 1
 fi
+ #tar xfz go1.17.8.linux-amd64.tar.gz
 tar xfz ./go1.16.8.linux-amd64.tar.gz
 if [ -d "/usr/local/go" ]; 
 then
@@ -72,10 +73,10 @@ git clone https://github.com/terra-money/core/
 cd core
 case "${CHAIN_ID}" in 
     "bombay-12")
-	git checkout v0.5.12-oracle
+	git checkout v0.5.17
 	;;
     *)
-	git checkout v0.5.12-oracle
+	git checkout v0.5.17
 	;;
 esac
 
@@ -127,7 +128,7 @@ sed 's/\"data/\"\/mnt\/disks\/data\/terrad\/data/' < ./config/config.toml.orig >
 case "${CHAIN_ID}" in 
     "columbus-5") 
         echo "Columbia not supported yet"
-        sed 's/seeds = \"\"/seeds = \"20271e0591a7204d72280b87fdaa854f50c55e7e@106.10.59.48:26656,3b1c85b86528d10acc5475cb2c874714a69fde1e@110.234.23.153:26656,49333a4cb195d570ea244dab675a38abf97011d2@13.113.103.57:26656,7f19128de85ced9b62c3947fd2c2db2064462533@52.68.3.126:26656\"/' < ./config/config.toml.1 > ./config/config.toml
+        sed 's/seeds = \"\"/seeds = \"20271e0591a7204d72280b87fdaa854f50c55e7e@106.10.59.48:26656,3b1c85b86528d10acc5475cb2c874714a69fde1e@110.234.23.153:26656,49333a4cb195d570ea244dab675a38abf97011d2@13.113.103.57:26656,7f19128de85ced9b62c3947fd2c2db2064462533@52.68.3.126:26656,87048bf71526fb92d73733ba3ddb79b7a83ca11e@13.124.78.245:26656\"/' < ./config/config.toml.1 > ./config/config.toml
         ;;
     "bombay-12")
         sed 's/seeds = \"\"/seeds = \"8eca04192d4d4d7da32149a3daedc4c24b75f4e7@3.34.163.215:26656\"/' < ./config/config.toml.1 > ./config/config.toml
@@ -140,7 +141,7 @@ esac
 
 # app.toml
 cp ./config/app.toml ./config/app.toml.orig
-sed 's/minimum-gas-prices = \"\"/minimum-gas-prices=\"0.013199uluna,0.38uusd,0.527101uaud,0.481912ucad,0.347244uchf,2.455638ucny,2.402775udkk,0.323109ueur,0.276745ugbp,2.950842uhkd,5450.0uidr,28.085651uinr,41.68797ujpy,443.515327ukrw,1061.675585umnt,3.314161unok,19.0uphp,0.267408usdr,3.314161usek,0.514572usgd,12.581803uthb\"/' < ./config/app.toml.orig > ./config/app.toml
+sed 's/minimum-gas-prices = \"\"/minimum-gas-prices=\"0.01133uluna,0.104938usdr,0.15uusd,169.77ukrw,428.571umnt,0.125ueur,0.98ucny,16.37ujpy,0.11ugbp,10.88uinr,0.19ucad,0.14uchf,0.19uaud,0.2usgd,4.62uthb,1.25usek,1.25unok,0.9udkk,2180.0uidr,7.6uphp,1.17uhkd,0.6umyr,4.0utwd\"/' < ./config/app.toml.orig > ./config/app.toml
 
 
 popd
@@ -169,6 +170,7 @@ case "${CHAIN_ID}" in
 #        hash=$(curl -s https://get.quicksync.io/${syncfile}.hash)
 #        curl -s https://lcd.terra.dev/txs/${hash}|jq -r '.tx.value.memo'|sha512sum -c
 #        ${HOME}/validator/checksum.sh ${syncfile}
+#        tar -I lz4 -xf columbus-5-pruned.20220320.0410.tar.lz4
 
 #        echo "exit code $?"
 #        echo "waiting..."
